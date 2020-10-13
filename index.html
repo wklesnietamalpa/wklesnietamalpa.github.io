@@ -65,6 +65,79 @@ alert("Dobra robota!");
 $("#przyciskWisielec").click(zagrajWWisielca);
 </script>
 
+<h1 id="nagłówek">Znajdź ukryty skarb!</h1>
+	
+	<img id="mapa" width=800 height=800 src="https://nostarch.com/images/treasuremap.png">
+	
+	<p id="odległość"></p>
+	
+	<p id="pozostałeKliknięcia"></p>
+	
+	<script>
+    //kod gry
+	function uzyskajLosowąLiczbę(rozmiar) {
+		return Math.floor(Math.random() * rozmiar);
+	};
+	
+	function obliczOdległość(zdarzenie, cel) {
+		var różnicaX = zdarzenie.offsetX - cel.x;
+		var różnicaY = zdarzenie.offsetY - cel.y;
+		return Math.sqrt((różnicaX * różnicaX) + (różnicaY * różnicaY));
+	};
+	
+	function skonstruujPodpowiedź(odległość) {
+		if (odległość < 10) {
+			return "Parzy!";
+		}
+		if (odległość < 20) {
+			return "Gorąco";
+		}
+		if (odległość < 40) {
+			return "Ciepło";
+		}
+		if (odległość < 80) {
+			return "Letnio";
+		}
+		if (odległość < 160) {
+			return "Zimno";
+		}
+		if (odległość < 320) {
+			return "Mróz";
+		}
+		
+		return "Syberia!"
+	};
+	
+	var szerokość = 800;
+	var wysokość = 800;
+	var kliknięcia = 0;
+	var limitKliknięć = 50;
+	var pozostałeKliknięcia = 50;
+	
+	var cel = {
+		x: uzyskajLosowąLiczbę(szerokość),
+		y: uzyskajLosowąLiczbę(wysokość)
+	};
+	
+	$("#mapa").click(function(zdarzenie) {
+		//obsługa kliknięcia
+		kliknięcia++;
+		pozostałeKliknięcia--;
+		var odległość = obliczOdległość(zdarzenie, cel);
+		var podpowiedź = skonstruujPodpowiedź(odległość);
+		$("#odległość").text(podpowiedź);		
+		$("#pozostałeKliknięcia").text("Pozostało " + pozostałeKliknięcia + " kliknięć.");		
+		
+		if (odległość < 8 && kliknięcia <= limitKliknięć) {
+			alert("Skarb został znaleziony po " + kliknięcia + " kliknięciach");
+		};
+		
+		if (kliknięcia > limitKliknięć) {
+			alert("Przekroczono limit kliknięć :(");
+		};
+	});
+	</script>
+
 </body>
 
 
