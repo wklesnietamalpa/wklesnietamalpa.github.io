@@ -14,6 +14,59 @@
 
 <h2> Witaj! </h2>
 
+<h1>Wisielec!</h1>
+<h2 id="przyciskWisielec">ZAGRAJ!</h2>
+
+<script src="http://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>
+function zagrajWWisielca() {
+
+var słowa = [
+"javascript",
+"liski",
+"ciekawy",
+"komputer",
+"supeł",
+"jabłko"
+];
+
+var słowo = słowa[Math.floor(Math.random() * słowa.length)];
+var odpowiedzi = [];
+for (var i = 0; i < słowo.length; i++) {
+    odpowiedzi[i] = '_';
+}
+var pozostałeLitery = słowo.length
+
+//pętla główna
+while (pozostałeLitery > 0) {
+    alert(odpowiedzi.join(" "));
+	
+	var strzał = prompt("Podaj literę albo kliknij Anuluj, aby zakończyć grę.");
+	if (strzał == null){
+	    break;
+	} else if (strzał.length !== 1) {
+	alert("Proszę podaj tylko jedną literę.");
+	} else {
+	//Zaktualizuj stan gry
+	strzał = strzał.toLowerCase();
+	for (var j = 0; j < słowo.length; j++) {
+	    if (słowo[j] === strzał) {
+		  odpowiedzi[j] = strzał;
+		  pozostałeLitery--;
+		}
+	}	
+	}
+}
+
+if (słowo === odpowiedzi.join("")) {
+alert(odpowiedzi.join(" "));
+alert("Dobra robota!");
+}
+};
+$("#przyciskWisielec").click(zagrajWWisielca);
+</script>
+
 </body>
 
 
